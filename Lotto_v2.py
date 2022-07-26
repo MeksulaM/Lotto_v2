@@ -30,10 +30,12 @@ def add_numbers():
     for row in range(1, 6):
         for column in range(1, 11):
             num_dict[f"{num}"] = \
-                tk.Checkbutton(numbers_frame, text=num, indicatoron=False,
-                               font=('Consolas', 13), width=2, height=2,
-                               pady=7, padx=14)
-            num_dict[f"{num}"].grid(row=row, column=column)
+                tk.Checkbutton(numbers_frame, text=num, indicatoron=False, font=('Consolas', 13))
+            num_dict[f"{num}"].grid(row=row, column=column, sticky='nsew')
+
+            tk.Grid.rowconfigure(numbers_frame, row, weight=1)
+            tk.Grid.columnconfigure(numbers_frame, column, weight=1)
+
             num += 1
             if num == 50:
                 break
@@ -55,7 +57,7 @@ def add_start_btn(frame):
 
 
 app = tk.Tk()
-app.geometry("1210x800")
+app.geometry("1200x800")
 add_banner()
 add_numbers()
 add_drawing_machine()
