@@ -210,6 +210,9 @@ animation_frames = []
 
 app = tk.Tk()
 app.geometry("1200x600")
+icon = tk.PhotoImage(file='icon.png')
+app.iconphoto(True, icon)
+app.title('Lotto by Mati')
 app.config(bg='light blue')
 animation_label = tk.Label()
 add_banner(app)
