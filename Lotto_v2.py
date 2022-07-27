@@ -21,6 +21,7 @@ def add_banner(frame):
     banner_label.pack(fill='both', expand=True)
 
     add_start_btn(banner_frame)
+    add_play_again_btn(banner_frame)
 
 
 def add_numbers(frame, num_list, var_list):
@@ -103,6 +104,14 @@ def add_start_btn(frame):
     buttons_dict['start'] = start_btn
 
 
+def add_play_again_btn(frame):
+    play_again_btn = tk.Button(frame, text='PLAY AGAIN', font=('Consolas', 14, 'bold'))
+    play_again_btn.config(command=play_again)
+    play_again_btn.place(relx=1, rely=0.4, anchor='ne')
+
+    buttons_dict['play_again'] = play_again_btn
+
+
 def add_check_mark_btn(frame):
     check_mark_btn = tk.Button(frame, text=u'\N{check mark}', font=('Consolas', 10, 'bold'))
     check_mark_btn.config(command=stage_03)
@@ -132,9 +141,10 @@ def machine_animation(label):
         app.update()
 
 
-def stage_01(btn_list, button):
+def stage_01(btn_list):
     checkbuttons_state(btn_list, 'disabled')
-    button.config(state='disabled')
+    buttons_dict['check_mark'].config(state='disabled')
+    buttons_dict['play_again'].config(state='disabled')
 
 
 def stage_02():
@@ -167,6 +177,27 @@ def stage_04():
 
         app.update()
 
+    buttons_dict['play_again'].config(state='active')
+
+
+def play_again():
+    buttons_dict['play_again'].config(state='disabled')
+    buttons_dict['check_mark'].config(activebackground='SystemButtonFace')
+    buttons_dict['check_mark'].config(background='SystemButtonFace')
+
+    for index in range(0, 49):
+        checkbuttons_list[index].config(state='active')
+        variables_list[index].set(0)
+
+    for index in range(0, 6):
+        selected_numbers.pop(0)
+
+    for label in results_labels:
+        label.config(bg='white', text='')
+
+    global available_numbers
+    available_numbers = list(range(1, 50))
+
 
 checkbuttons_list = []
 variables_list = []
@@ -176,7 +207,6 @@ drawn_numbers = []
 results_labels = []
 available_numbers = list(range(1, 50))
 animation_frames = []
-
 
 app = tk.Tk()
 app.geometry("1200x600")
@@ -188,8 +218,5 @@ add_drawing_machine(app)
 add_results_board(app)
 add_numbers(app, checkbuttons_list, variables_list)
 
-
-stage_01(checkbuttons_list, buttons_dict['check_mark'])
-
+stage_01(checkbuttons_list)
 app.mainloop()
-
